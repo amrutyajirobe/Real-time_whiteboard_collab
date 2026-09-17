@@ -6,6 +6,7 @@ import react from "@vitejs/plugin-react";
 // -  `server.port` puts the client on port 3000, matching the CORS origin
 //    we set in the Socket.io server (http://localhost:3000).
 export default defineConfig({
+  base: "./",
   plugins: [react()],
   server: {
     port: 3000,

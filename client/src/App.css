@@ -1,0 +1,273 @@
+/* ───────────────────────────────────────────────
+   App.css  –  Modern SaaS-style whiteboard UI
+   ─────────────────────────────────────────────── */
+
+/* ---- Reset ---- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+  overflow: hidden;
+}
+
+.app {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* ──────────────────────────────────────────────
+   Canvas  –  dot-grid workspace background
+   ────────────────────────────────────────────── */
+.canvas-container {
+  width: 100%;
+  height: 100%;
+  background-color: #fafafa;
+  background-image: radial-gradient(circle, #d4d4d4 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.canvas-container canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+}
+
+/* ──────────────────────────────────────────────
+   Floating Toolbar  –  glass pill at bottom
+   ────────────────────────────────────────────── */
+.toolbar {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  z-index: 100;
+}
+
+.toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.toolbar-divider {
+  width: 1px;
+  height: 28px;
+  background: rgba(0, 0, 0, 0.1);
+  margin: 0 4px;
+}
+
+/* ── Tool buttons (Pen / Eraser) ── */
+.tool-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tool-btn:hover {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.tool-btn.active {
+  background: #ede9fe;
+  color: #6d28d9;
+}
+
+/* ── Colour swatches ── */
+.color-swatches {
+  gap: 5px;
+}
+
+.color-swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2.5px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  padding: 0;
+  outline: none;
+}
+
+.color-swatch:hover {
+  transform: scale(1.2);
+}
+
+.color-swatch.active {
+  border-color: #6d28d9;
+  box-shadow: 0 0 0 2px rgba(109, 40, 217, 0.25);
+}
+
+/* ── Custom colour picker (rainbow ring) ── */
+.custom-color {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+}
+
+.custom-color input[type="color"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.custom-color-ring {
+  display: block;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: conic-gradient(hsl(0, 80%, 55%),
+      hsl(60, 80%, 55%),
+      hsl(120, 80%, 55%),
+      hsl(180, 80%, 55%),
+      hsl(240, 80%, 55%),
+      hsl(300, 80%, 55%),
+      hsl(360, 80%, 55%));
+  pointer-events: none;
+}
+
+/* ── Brush size slider ── */
+.size-control {
+  gap: 8px;
+}
+
+.size-label {
+  font-size: 11px;
+  color: #999;
+  min-width: 28px;
+  text-align: center;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.size-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 80px;
+  height: 5px;
+  background: #e5e5e5;
+  border-radius: 999px;
+  outline: none;
+  cursor: pointer;
+}
+
+.size-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #6d28d9;
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.1s;
+}
+
+.size-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.size-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #6d28d9;
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* ── Clear button (ghost → red on hover) ── */
+.clear-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: #aaa;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.clear-btn:hover {
+  background: #fef2f2;
+  color: #ef4444;
+}
+
+/* ──────────────────────────────────────────────
+   Presence pill  –  top-right corner
+   ────────────────────────────────────────────── */
+.presence {
+  position: fixed;
+  top: 16px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 14px 6px 8px;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 40px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  z-index: 100;
+}
+
+.presence-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  border: 2px solid #fff;
+  margin-left: -6px;
+}
+
+.presence-avatar:first-child {
+  margin-left: 0;
+}
+
+.presence-count {
+  font-size: 12px;
+  color: #888;
+  font-weight: 500;
+  margin-left: 6px;
+  white-space: nowrap;
+}

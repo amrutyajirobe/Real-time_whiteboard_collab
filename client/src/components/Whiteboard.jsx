@@ -12,10 +12,19 @@ function Whiteboard({ color, brushSize, tool }) {
     const ctx = canvas.getContext("2d");
 
     const resize = () => {
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      let imageData = null;
+      if (canvas.width > 0 && canvas.height > 0) {
+        try {
+          imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        } catch {
+          // Ignore if canvas isn't ready or readable
+        }
+      }
       canvas.width = canvas.parentElement.clientWidth;
       canvas.height = canvas.parentElement.clientHeight;
-      ctx.putImageData(imageData, 0, 0);
+      if (imageData) {
+        ctx.putImageData(imageData, 0, 0);
+      }
     };
     resize();
     window.addEventListener("resize", resize);

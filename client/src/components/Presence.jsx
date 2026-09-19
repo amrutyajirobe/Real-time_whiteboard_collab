@@ -1,5 +1,21 @@
-function Presence({ users }) {
-  if (users.length === 0) return null;
+function Presence({ users, isConnected }) {
+  if (!isConnected) {
+    return (
+      <div className="presence offline" title="Backend server (http://localhost:3001) is disconnected">
+        <span className="presence-dot offline-dot" />
+        <span className="presence-count">Server Offline</span>
+      </div>
+    );
+  }
+
+  if (users.length === 0) {
+    return (
+      <div className="presence">
+        <span className="presence-dot online-dot" />
+        <span className="presence-count">Connecting...</span>
+      </div>
+    );
+  }
 
   return (
     <div className="presence">
@@ -21,4 +37,3 @@ function Presence({ users }) {
 }
 
 export default Presence;
-

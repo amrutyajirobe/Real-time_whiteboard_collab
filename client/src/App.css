@@ -271,3 +271,29 @@ body {
   margin-left: 6px;
   white-space: nowrap;
 }
+
+.presence.offline {
+  border-color: rgba(239, 68, 68, 0.3);
+  background: rgba(254, 242, 242, 0.9);
+}
+
+.presence.offline .presence-count {
+  color: #ef4444;
+  font-weight: 600;
+}
+
+.presence-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 4px;
+}
+
+.offline-dot {
+  background-color: #ef4444;
+}
+
+.online-dot {
+  background-color: #22c55e;
+}

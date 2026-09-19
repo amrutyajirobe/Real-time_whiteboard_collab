@@ -9,18 +9,36 @@ function App() {
   const [brushSize, setBrushSize] = useState(4);
   const [tool, setTool] = useState("pen"); // "pen" | "eraser"
   const [users, setUsers] = useState([]);
+  const [isConnected, setIsConnected] = useState(socket.connected);
 
-  // Listen for presence updates from the server
   useEffect(() => {
+    const handleConnect = () => setIsConnected(true);
+    const handleDisconnect = () => {
+      setIsConnected(false);
+      setUsers([]);
+    };
     const handleUsers = (userList) => setUsers(userList);
+
+    socket.on("connect", handleConnect);
+    socket.on("disconnect", handleDisconnect);
     socket.on("users", handleUsers);
-    return () => socket.off("users", handleUsers);
+
+    // Initial check
+    if (socket.connected) {
+      setIsConnected(true);
+    }
+
+    return () => {
+      socket.off("connect", handleConnect);
+      socket.off("disconnect", handleDisconnect);
+      socket.off("users", handleUsers);
+    };
   }, []);
 
   return (
     <div className="app">
-      {/* Presence badges — top-right corner */}
-      <Presence users={users} />
+      {/* Presence badge / connection indicator — top-right corner */}
+      <Presence users={users} isConnected={isConnected} />
 
       {/* Canvas takes the full viewport */}
       <Whiteboard color={color} brushSize={brushSize} tool={tool} />
